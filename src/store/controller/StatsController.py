@@ -1,3 +1,5 @@
+from src.sorting_algorithms.Sorting import Sorting
+from src.sorting_algorithms.algorithms.Algorithms import Algorithms
 from store.domain.Entities.Extra import Extra
 from store.repository.Repository import Repository
 
@@ -17,10 +19,12 @@ class StatsController(object):
   def sort_by_name(self):
     clients_id = [x.Id for x in self.__repo.get_all()]
     clients = [self.__client_repo.find(Id) for Id in clients_id]
-    return sorted(clients, key=lambda x: x.name, reverse=False)
+    Sorting.sort(clients, key=lambda x: x.name, reverse=False, algorithm=Algorithms.SHAKE_SORT)
+    return clients
 
   def sort_by_borrow(self):
-    clients_with_rent = sorted(self.__repo.get_all(), key=lambda x: len(x.movies), reverse=True)
+    clients_with_rent = self.__repo.get_all()
+    Sorting.sort(clients_with_rent, key=lambda x: len(x.movies), reverse=True, algorithm=Algorithms.SELECTION_SORT)
     return [self.__client_repo.find(x.Id) for x in clients_with_rent]
 
   def first_30_percent(self):
@@ -29,11 +33,6 @@ class StatsController(object):
     first_30 = int(len(li) / 3)
     return li[0:first_30 + 1]
 
-
-  '''
-    3. Print the list of movies (name, genre, rented_count) sorted after genre alphabetically and
-  descendingly after rented_count (how many times it was rented).
-  '''
   def get_count(self, movie_id):
     k = 0
     all_rented = []

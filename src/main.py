@@ -18,11 +18,11 @@ class App(object):
     """Set up the app
     """
     movie_repo = MovieFileRepository(MovieValidator(),
-                                     "store/movies")
+                                     "/Users/victor/Github/MovieRental/data/movies")
     client_repo = ClientFileRepository(ClientValidator(),
-                                       "/Users/victor/Google Drive/PycharmProjects/MovieRental_I7/data/clients")
+                                       "/Users/victor/Github/MovieRental/data/clients")
     rent_return_repo = RentFileRepository(RentReturnValidator(),
-                                          "/Users/victor/Google Drive/PycharmProjects/MovieRental_I7/data/rents")
+                                          "/Users/victor/Github/MovieRental/data/rents")
 
     movie_controller = MovieController(movie_repo)
     client_controller = ClientController(client_repo)
